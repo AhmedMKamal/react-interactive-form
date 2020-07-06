@@ -1,4 +1,4 @@
-# reactive-signup-form
+# react-interactive-form
 
 > Animated Signup/Login from for React.js
 
@@ -27,4 +27,7 @@ class Example extends Component {
 
 ## License
 
-MIT © [Ahmed Kamal &lt;en.ahmed.mk@gmail.com&gt;](https://github.com/Ahmed Kamal &lt;en.ahmed.mk@gmail.com&gt;)
+Licensed under the [MIT][LICENSE] license.
+
+
+[LICENSE]: https://github.com/AhmedMKamal/reactive-signup-form/blob/master/LICENSE
