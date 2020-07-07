@@ -3,10 +3,13 @@ import {
   withFormContext,
   ComponentWithInteractiveFormContext
 } from '../internal/FormContext';
+import styles from './FormInput.scss';
+import NextIcon from '../internal/NextIcon';
 
 export type FormInputType = 'text' | 'email' | 'password';
 
 interface FormInputProps {
+  readonly name: Readonly<string>;
   readonly type: Readonly<FormInputType>;
   readonly placeholder?: Readonly<string>;
   readonly value?: Readonly<string>;
@@ -19,12 +22,15 @@ interface FormInputState {
   readonly valid: boolean;
   readonly required: boolean;
   readonly nextButtonVisible: boolean;
+  readonly inputWidth?: string;
 }
 
 class FormInput extends React.Component<
   Readonly<ComponentWithInteractiveFormContext<FormInputProps>>,
   Readonly<FormInputState>
 > {
+  public static readonly displayName = 'ReactInteractiveFormInput';
+
   constructor(
     props: Readonly<ComponentWithInteractiveFormContext<FormInputProps>>
   ) {
@@ -37,6 +43,13 @@ class FormInput extends React.Component<
     };
   }
 
+  private handleEnterKeyDown = (event: React.KeyboardEvent): void => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      (event.target as HTMLInputElement).blur();
+    }
+  };
+
   private handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     this.setState({
       value: event.target.value,
@@ -45,47 +58,67 @@ class FormInput extends React.Component<
     });
   };
 
+  private handleFocus = (event: React.FocusEvent<HTMLInputElement>): void => {
+    const { parentElement } = event.target;
+    if (parentElement) {
+      parentElement.classList.remove(styles.inputGroupBlur);
+      parentElement.classList.add(styles.inputGroupFocus);
+    }
+  };
+
+  private handleBlur = (event: React.FocusEvent<HTMLInputElement>): void => {
+    const { parentElement } = event.target;
+    if (parentElement) {
+      parentElement.classList.add(styles.inputGroupBlur);
+      parentElement.classList.remove(styles.inputGroupFus);
+    }
+    if (this.state.value.length) {
+      this.setState({ inputWidth: this.state.value.length + 'ch' }, () => {
+        this.handleNextStep();
+      });
+    }
+  };
+
+  private handleNextStep = (): void => {
+    this.setState({ nextButtonVisible: false }, () => {
+      this.props.riform.setValue(this.props.name, this.state.value);
+      this.props.riform.nextStep();
+    });
+  };
+
   public render(): JSX.Element {
     const { type, placeholder, required } = this.props;
-    const { value, nextButtonVisible } = this.state;
+    const { value, nextButtonVisible, inputWidth } = this.state;
 
     return (
-      <div className='inline-flex items-center border-b border-gray-600 m-2'>
+      <div
+        className={`${styles.inputGroup} inline-flex items-center border-b border-gray-400 m-2 relative`}
+      >
         <input
           type={type}
           placeholder={placeholder}
           value={value}
           required={required}
           onChange={this.handleChange}
-          className='outline-none focus:outline-none font-semibold text-xl'
+          onKeyDown={this.handleEnterKeyDown}
+          onFocus={this.handleFocus}
+          onBlur={this.handleBlur}
+          className='outline-none focus:outline-none font-semibold text-xl w-32'
+          style={{ width: inputWidth }}
+          autoFocus
         />
         {nextButtonVisible && (
-          <button className='text-primary h-full' type='button'>
+          <button
+            className='text-primary h-full'
+            onClick={this.handleNextStep}
+            type='button'
+          >
             <NextIcon />
           </button>
         )}
       </div>
     );
   }
-}
-
-function NextIcon(): JSX.Element {
-  return (
-    <svg
-      viewBox='0 0 492.004 492.004'
-      className='fill-current h-full w-4'
-      x='0px'
-      y='0px'
-    >
-      <path
-        d='M484.14,226.886L306.46,49.202c-5.072-5.072-11.832-7.856-19.04-7.856c-7.216,0-13.972,2.788-19.044,7.856l-16.132,16.136
-			c-5.068,5.064-7.86,11.828-7.86,19.04c0,7.208,2.792,14.2,7.86,19.264L355.9,207.526H26.58C11.732,207.526,0,219.15,0,234.002
-			v22.812c0,14.852,11.732,27.648,26.58,27.648h330.496L252.248,388.926c-5.068,5.072-7.86,11.652-7.86,18.864
-			c0,7.204,2.792,13.88,7.86,18.948l16.132,16.084c5.072,5.072,11.828,7.836,19.044,7.836c7.208,0,13.968-2.8,19.04-7.872
-			l177.68-177.68c5.084-5.088,7.88-11.88,7.86-19.1C492.02,238.762,489.228,231.966,484.14,226.886z'
-      />
-    </svg>
-  );
 }
 
 export default withFormContext(FormInput);

@@ -13,7 +13,7 @@ import FormPanelTitle, {
 } from './components/FormPanelTitle';
 import FormPanelCard, { FormPanelCardProps } from './components/FormPanelCard';
 import FormPanelLink, { FormPanelLinkProps } from './components/FormPanelLink';
-import FormStage, { StageOptions } from './components/FormStage';
+import FormStage, { StageProps } from './components/FormStage';
 import FormInput from './components/FormInput';
 import FormButton from './components/FormButton';
 import FormText from './components/FormText';
@@ -38,7 +38,7 @@ export {
   FormPanelLink,
   FormPanelLinkProps,
   FormStage,
-  StageOptions,
+  StageProps,
   FormInput,
   FormButton,
   FormText

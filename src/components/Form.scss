@@ -1,0 +1,25 @@
+$fade-area-height: 5rem;
+
+.scrollArea {
+  scrollbar-width: none; // Firefox
+  &::-webkit-scrollbar {
+    display: none; // Safari and Chrome
+  }
+
+  &::before, &::after {
+    content: ' ';
+    height: $fade-area-height;
+    z-index: 2;
+    @apply inline-block sticky left-0 w-full;
+  }
+
+  &::before {
+    top: 0;
+    background-image: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.1));
+  }
+
+  &::after {
+    bottom: 0;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 1));
+  }
+}

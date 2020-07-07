@@ -10,7 +10,12 @@ module.exports = {
       }
     },
     borderRadius: {
-      lg: '1rem'
+      none: '0',
+      sm: '0.125rem',
+      default: '4px',
+      md: '0.375rem',
+      lg: '1rem',
+      full: '9999px'
     },
     minHeight: {
       '0': '0',

@@ -1,0 +1,12 @@
+.formStage {
+  animation: fadeIn 200ms linear;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

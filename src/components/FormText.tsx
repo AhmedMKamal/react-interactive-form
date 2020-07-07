@@ -6,19 +6,20 @@ interface FormTextProps {
   readonly children: Readonly<string>;
 }
 
-export default class FormText extends React.Component<FormTextProps> {
-  public render(): JSX.Element {
-    return (
-      <span
-        className={`${styles.typewriter} text-gray-600 font-semibold text-xl`}
-      >
-        <Typewriter
-          options={{ cursor: '', delay: 25 }}
-          onInit={(typewriter): void => {
-            typewriter.typeString(this.props.children).start();
-          }}
-        />
-      </span>
-    );
-  }
+export default function FormText({ children }: FormTextProps): JSX.Element {
+  return (
+    <span
+      className={`${styles.typewriter} text-gray-600 font-semibold text-xl`}
+    >
+      <Typewriter
+        key={children}
+        options={{ cursor: '', delay: 20 }}
+        onInit={(w): void => {
+          setTimeout(() => {
+            w.typeString(children).start();
+          }, 100);
+        }}
+      />
+    </span>
+  );
 }

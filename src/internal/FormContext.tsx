@@ -11,6 +11,11 @@ export interface FormContextProps {
   values: { [name: string]: string };
   setError: (name: string, error?: string | null) => void;
   errors: { [name: string]: string | undefined | null } | null;
+
+  stepIndex: number;
+  setStepIndex: (index: number) => void;
+  nextStep: () => void;
+  previousStep: () => void;
 }
 
 export const FormContext = React.createContext<FormContextProps>({
@@ -23,7 +28,11 @@ export const FormContext = React.createContext<FormContextProps>({
   setValue: () => -1,
   values: {},
   setError: () => -1,
-  errors: null
+  errors: null,
+  stepIndex: 0,
+  setStepIndex: () => -1,
+  nextStep: () => -1,
+  previousStep: () => -1
 });
 
 export const FormContextProvider = FormContext.Provider;
@@ -37,9 +46,12 @@ export type ComponentWithInteractiveFormContext<
 export function withFormContext<OwnProps extends {}>(
   Component: React.ComponentType<ComponentWithInteractiveFormContext<OwnProps>>
 ): React.ComponentType<Omit<OwnProps, typeof InteractiveFormContextPropName>> {
-  return class WithContext extends React.PureComponent<
+  return class WithContext extends React.Component<
     OwnProps & FormContextProps
   > {
+    public static readonly displayName =
+      Component.displayName || 'ComponentWithInteractiveFormContext';
+
     public render(): React.ReactNode {
       return (
         <FormContext.Consumer>

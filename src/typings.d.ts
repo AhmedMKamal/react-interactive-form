@@ -3,20 +3,25 @@ declare module '*.css' {
   export default content;
 }
 
-declare module "typewriter-effect" {
+declare module '*.scss' {
+  const content: { [className: string]: string };
+  export default content;
+}
+
+declare module 'typewriter-effect' {
   export interface Options {
-    strings?: string[],
-    cursor?: string,
-    delay?: 'natural' | number,
-    deleteSpeed?: 'natural' | number,
-    loop?: boolean,
-    autoStart?: boolean,
-    devMode?: boolean,
-    wrapperClassName?: string,
-    cursorClassName?: string,
+    strings?: string[];
+    cursor?: string;
+    delay?: 'natural' | number;
+    deleteSpeed?: 'natural' | number;
+    loop?: boolean;
+    autoStart?: boolean;
+    devMode?: boolean;
+    wrapperClassName?: string;
+    cursorClassName?: string;
   }
 
-  class Typewriter {
+  export class Typewriter {
     constructor(container: string | HTMLElement, options: Options);
 
     start(): Typewriter;
@@ -32,7 +37,7 @@ declare module "typewriter-effect" {
   }
 
   export interface TypeWriterProps {
-    onInit?: (typewriter:Typewriter) => void;
+    onInit?: (typewriter: Typewriter) => void;
     options?: Options;
   }
 
