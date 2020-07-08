@@ -14,6 +14,8 @@ npm install --save react-interactive-form
 
 Live demo is [here](https://ahmedmkamal.github.io/react-interactive-form/)
 
+[![Watch the video](https://raw.githubusercontent.com/AhmedMKamal/react-interactive-form/master/example/public/signup-interaction.png)](https://cdn.dribbble.com/users/821812/screenshots/12209934/media/813ad3d91a77d01c533320043f56af47.mp4)
+
 ## Usage
 
 Usage example is [here](https://github.com/AhmedMKamal/react-interactive-form/blob/master/example/src/App.tsx)
