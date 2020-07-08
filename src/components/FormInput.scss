@@ -26,3 +26,17 @@
     width: 0;
   }
 }
+
+.input {
+  @apply w-32;
+  animation: expandH 300ms linear;
+}
+
+@keyframes expandH {
+  from {
+    @apply w-0;
+  }
+  to {
+    @apply w-32;
+  }
+}

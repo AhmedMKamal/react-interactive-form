@@ -60,14 +60,18 @@ export default class Form extends React.Component<
       if (index > -1) {
         const stage = stages[index + 1];
         if (stage) {
-          this.setState({
-            activeStageName: stage.props.name,
-            currentStepIndex: 0
-          });
+          this.setState(
+            {
+              activeStageName: stage.props.name,
+              currentStepIndex: 0
+            },
+            () => {
+              this.scrollToBottom();
+            }
+          );
         }
       }
     }
-    this.scrollToBottom();
   };
 
   private previousStage = (): void => {
@@ -114,16 +118,6 @@ export default class Form extends React.Component<
     );
   };
 
-  /*
-  private isVisibleStage = (stage: JSX.Element): boolean => {
-    const currentIndex = this.props.children.findIndex(this.isCurrentStage);
-    const targetIndex = this.props.children.findIndex((child) => {
-      return child && child.props && child.props.name === stage.props.name;
-    });
-    return targetIndex <= currentIndex;
-  };
-  */
-
   private onSubmit = async (event: React.FormEvent): Promise<void> => {
     event.preventDefault();
     await this.props.onSubmit(this.state.values);
@@ -144,12 +138,12 @@ export default class Form extends React.Component<
           setValue: this.setValue,
           setValues: this.setValues,
           setError: this.setError,
-          values: values,
-          errors: errors,
           stepIndex: currentStepIndex,
           setStepIndex: this.setCurrentStepIndex,
           nextStep: this.nextStep,
-          previousStep: this.previousStep
+          previousStep: this.previousStep,
+          values,
+          errors
         }}
       >
         <div className='flex w-full h-full items-center overflow-hidden'>
@@ -161,7 +155,11 @@ export default class Form extends React.Component<
             }}
           >
             <form onSubmit={this.onSubmit}>
-              {children.slice(0, children.findIndex(this.isCurrentStage) + 1)}
+              {children
+                .slice(0, children.findIndex(this.isCurrentStage) + 1)
+                .map((child, index) => (
+                  <React.Fragment key={index}>{child}</React.Fragment>
+                ))}
             </form>
           </div>
         </div>

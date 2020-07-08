@@ -15,6 +15,7 @@ interface FormInputProps {
   readonly value?: Readonly<string>;
   readonly required?: boolean;
   readonly validate?: RegExp | ((value: string) => boolean);
+  readonly shouldRender?: boolean;
 }
 
 interface FormInputState {
@@ -23,6 +24,7 @@ interface FormInputState {
   readonly required: boolean;
   readonly nextButtonVisible: boolean;
   readonly inputWidth?: string;
+  readonly shouldRender: boolean;
 }
 
 class FormInput extends React.Component<
@@ -39,7 +41,9 @@ class FormInput extends React.Component<
       value: '',
       valid: false,
       required: false,
-      nextButtonVisible: false
+      nextButtonVisible: false,
+      shouldRender:
+        typeof props.shouldRender === 'boolean' ? props.shouldRender : true
     };
   }
 
@@ -86,9 +90,13 @@ class FormInput extends React.Component<
     });
   };
 
-  public render(): JSX.Element {
+  public render(): JSX.Element | null {
     const { type, placeholder, required } = this.props;
-    const { value, nextButtonVisible, inputWidth } = this.state;
+    const { value, nextButtonVisible, inputWidth, shouldRender } = this.state;
+
+    if (!shouldRender) {
+      return null;
+    }
 
     return (
       <div
@@ -103,7 +111,7 @@ class FormInput extends React.Component<
           onKeyDown={this.handleEnterKeyDown}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
-          className='outline-none focus:outline-none font-semibold text-xl w-32'
+          className={`${styles.input} outline-none focus:outline-none font-semibold text-xl`}
           style={{ width: inputWidth }}
           autoFocus
         />

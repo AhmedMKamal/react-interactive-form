@@ -48,31 +48,39 @@ const App = () => {
           />
           <Form onSubmit={handleSubmit}>
             <FormStage name='name-and-email'>
-              <FormText>Hello, Your name is</FormText>
-              <FormInput type='text' name='name' placeholder='John Doe' />
+              <FormText>
+                Hello, Your name is
+                <FormInput type='text' name='name' placeholder='John Doe' />
+              </FormText>
               <FormText>
                 and you would like to sign up with the email address
+                <FormInput
+                  type='email'
+                  name='email'
+                  placeholder='example@me.com'
+                />
               </FormText>
-              <FormInput
-                type='email'
-                name='email'
-                placeholder='example@me.com'
-              />
             </FormStage>
             <FormStage name='password'>
               <FormText>
                 Create a strong password with mix of characters and numbers
+                <FormInput
+                  type='password'
+                  name='password'
+                  placeholder='******'
+                />
               </FormText>
-              <FormInput type='password' name='password' placeholder='******' />
             </FormStage>
             <FormStage name='submit'>
-              <FormText>Great, you're all set.</FormText>
-              <FormButton>
-                <div className='inline-flex items-center'>
-                  Create account&nbsp;
-                  <NextIcon />
-                </div>
-              </FormButton>
+              <FormText>
+                Great, you're all set.
+                <FormButton>
+                  <div className='inline-flex items-center'>
+                    Create account&nbsp;
+                    <NextIcon />
+                  </div>
+                </FormButton>
+              </FormText>
             </FormStage>
           </Form>
         </FormContainer>
