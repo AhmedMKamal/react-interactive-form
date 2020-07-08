@@ -1,6 +1,6 @@
 # react-interactive-form
 
-> Animated Signup/Login from for React.js
+> Animated Signup/Login form for React.js
 
 [![NPM](https://img.shields.io/npm/v/react-interactive-form.svg)](https://www.npmjs.com/package/react-interactive-form) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
